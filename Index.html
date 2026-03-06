@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta de Servicios · Andes Energy × Marín Ortega</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #080b14;
+    --bg2:       #0c1120;
+    --surface:   #111827;
+    --surface2:  #1a2340;
+    --border:    #1e2a4a;
+    --border2:   #283660;
+    --accent:    #3b82f6;
+    --accent2:   #93c5fd;
+    --accent-dim:rgba(59,130,246,0.10);
+    --accent-glow:rgba(59,130,246,0.04);
+    --gold:      #fbbf24;
+    --gold-dim:  rgba(251,191,36,0.10);
+    --red:       #f87171;
+    --red-dim:   rgba(248,113,113,0.10);
+    --text:      #e2e8f0;
+    --text-muted:#7a8baa;
+    --text-dim:  #3d4e6e;
+
+    /* plan colours */
+    --s-c:  #38bdf8; --s-dim: rgba(56,189,248,0.10); --s-bd: rgba(56,189,248,0.20);
+    --m-c:  #fb923c; --m-dim: rgba(251,146,60,0.10);  --m-bd: rgba(251,146,60,0.20);
+    --p-c:  #a78bfa; --p-dim: rgba(167,139,250,0.10); --p-bd: rgba(167,139,250,0.20);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'DM Sans',sans-serif;
+    font-weight:300;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+
+  /* noise */
+  body::before{
+    content:'';position:fixed;inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events:none;z-index:0;opacity:.35;
+  }
+
+  /* ── COVER ── */
+  .cover{
+    min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    padding:80px;position:relative;overflow:hidden;
+  }
+  .cover-grid{
+    position:absolute;inset:0;
+    background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+    background-size:60px 60px;opacity:.18;
+    mask-image:radial-gradient(ellipse 80% 80% at 20% 50%,black 40%,transparent 100%);
+  }
+  .cover::after{
+    content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;
+    background:radial-gradient(circle,rgba(59,130,246,.08) 0%,transparent 70%);
+    pointer-events:none;
+  }
+  .eyebrow{
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.25em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:32px;
+    display:flex;align-items:center;gap:12px;position:relative;z-index:1;
+  }
+  .eyebrow::before{content:'';width:40px;height:1px;background:var(--accent);}
+  .cover-sub-label{
+    font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted);
+    letter-spacing:.15em;text-transform:uppercase;margin-bottom:16px;position:relative;z-index:1;
+  }
+  .cover-title{
+    font-family:'Playfair Display',serif;font-size:clamp(56px,8vw,104px);
+    font-weight:900;line-height:.92;letter-spacing:-.03em;margin-bottom:40px;
+    position:relative;z-index:1;
+  }
+  .cover-title em{font-style:italic;color:var(--accent);}
+  .cover-desc{
+    font-size:17px;color:var(--text-muted);max-width:580px;line-height:1.75;
+    margin-bottom:56px;position:relative;z-index:1;
+  }
+  .cover-desc strong{color:var(--text);font-weight:500;}
+
+  .cover-meta{
+    display:flex;gap:48px;border-top:1px solid var(--border);padding-top:32px;
+    position:relative;z-index:1;flex-wrap:wrap;
+  }
+  .cover-meta-item label{
+    font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--text-dim);display:block;margin-bottom:4px;
+  }
+  .cover-meta-item span{font-size:14px;color:var(--text-muted);font-weight:500;}
+
+  /* ── SECTION SHELLS ── */
+  .section{padding:72px 80px;border-top:1px solid var(--border);position:relative;z-index:1;}
+  .sec-label{
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.25em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:44px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .sec-label .num{color:var(--text-dim);}
+  .sec-title{
+    font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,52px);
+    font-weight:700;line-height:1.05;letter-spacing:-.01em;margin-bottom:28px;max-width:700px;
+  }
+  .sec-title em{font-style:italic;color:var(--accent);}
+  .body-text{font-size:16px;color:var(--text-muted);max-width:700px;line-height:1.8;margin-bottom:8px;}
+
+  /* ── HIGHLIGHT BOX ── */
+  .hbox{
+    background:var(--accent-dim);border:1px solid rgba(59,130,246,.2);
+    border-left:3px solid var(--accent);padding:20px 24px;margin:28px 0;
+    font-size:14px;color:var(--accent2);line-height:1.7;
+  }
+  .hbox strong{color:var(--accent);}
+
+  /* ── PLAN CARDS ── */
+  .plan-card{
+    border:1px solid var(--border);background:var(--surface);
+    margin-bottom:2px;position:relative;overflow:hidden;
+  }
+  .plan-card::before{
+    content:'';position:absolute;top:0;left:0;width:4px;height:100%;
+  }
+  .plan-s::before{background:var(--s-c);}
+  .plan-m::before{background:var(--m-c);}
+  .plan-p::before{background:var(--p-c);}
+
+  .plan-head{
+    padding:40px 48px 36px;display:grid;
+    grid-template-columns:1fr auto;gap:32px;align-items:start;
+    border-bottom:1px solid var(--border);
+  }
+  .plan-num{
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;
+    text-transform:uppercase;margin-bottom:12px;
+  }
+  .plan-s .plan-num{color:var(--s-c);}
+  .plan-m .plan-num{color:var(--m-c);}
+  .plan-p .plan-num{color:var(--p-c);}
+
+  .plan-name{
+    font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,46px);
+    font-weight:900;line-height:1;letter-spacing:-.02em;margin-bottom:8px;
+  }
+  .plan-s .plan-name{color:var(--s-c);}
+  .plan-m .plan-name{color:var(--m-c);}
+  .plan-p .plan-name{color:var(--p-c);}
+
+  .plan-tagline{font-size:15px;color:var(--text-muted);font-style:italic;}
+
+  .plan-meta{text-align:right;}
+  .pill{
+    display:inline-block;font-family:'DM Mono',monospace;font-size:11px;
+    padding:4px 14px;border:1px solid;border-radius:2px;margin-bottom:8px;
+    letter-spacing:.05em;
+  }
+  .plan-s .pill{color:var(--s-c);border-color:var(--s-bd);background:var(--s-dim);}
+  .plan-m .pill{color:var(--m-c);border-color:var(--m-bd);background:var(--m-dim);}
+  .plan-p .pill{color:var(--p-c);border-color:var(--p-bd);background:var(--p-dim);}
+  .plan-meta p{font-size:12px;color:var(--text-dim);line-height:1.8;}
+
+  .price-tag{
+    font-family:'Playfair Display',serif;font-size:28px;font-weight:900;
+    margin-top:12px;
+  }
+  .plan-s .price-tag{color:var(--s-c);}
+  .plan-m .price-tag{color:var(--m-c);}
+  .plan-p .price-tag{color:var(--p-c);}
+  .price-note{font-size:11px;color:var(--text-dim);font-family:'DM Mono',monospace;letter-spacing:.05em;}
+
+  /* plan body */
+  .plan-body{padding:40px 48px 48px;}
+
+  /* 3-col pillars */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:40px;}
+  .pillar{
+    background:var(--bg2);border:1px solid var(--border);padding:28px 24px;
+    transition:border-color .25s,background .25s;
+  }
+  .pillar:hover{background:var(--surface2);}
+  .plan-s .pillar:hover{border-color:var(--s-c);}
+  .plan-m .pillar:hover{border-color:var(--m-c);}
+  .plan-p .pillar:hover{border-color:var(--p-c);}
+
+  .pillar-lbl{
+    font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;
+    text-transform:uppercase;margin-bottom:10px;
+  }
+  .plan-s .pillar-lbl{color:var(--s-c);}
+  .plan-m .pillar-lbl{color:var(--m-c);}
+  .plan-p .pillar-lbl{color:var(--p-c);}
+
+  .pillar h4{font-size:15px;font-weight:600;margin-bottom:10px;color:var(--text);}
+  .pillar p{font-size:13px;color:var(--text-muted);line-height:1.7;}
+
+  /* steps */
+  .steps-lbl{
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--text-dim);margin-bottom:16px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .steps-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  .step{
+    display:grid;grid-template-columns:48px 1fr;gap:20px;
+    padding:20px 0;border-bottom:1px solid var(--border);align-items:start;
+  }
+  .step:last-child{border-bottom:none;}
+  .step-n{
+    font-family:'DM Mono',monospace;font-size:13px;color:var(--text-dim);
+    padding-top:3px;
+  }
+  .step h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px;}
+  .step p{font-size:13px;color:var(--text-muted);line-height:1.65;margin-bottom:10px;}
+
+  /* tags */
+  .tags{display:flex;flex-wrap:wrap;gap:5px;}
+  .tag{
+    font-family:'DM Mono',monospace;font-size:11px;padding:2px 9px;
+    border-radius:2px;letter-spacing:.04em;border:1px solid;
+  }
+  .plan-s .tag{color:var(--s-c);border-color:var(--s-bd);background:var(--s-dim);}
+  .plan-m .tag{color:var(--m-c);border-color:var(--m-bd);background:var(--m-dim);}
+  .plan-p .tag{color:var(--p-c);border-color:var(--p-bd);background:var(--p-dim);}
+
+  /* result */
+  .result{
+    border:1px solid var(--border2);background:var(--bg2);
+    padding:24px 28px;margin-top:32px;
+  }
+  .result-lbl{
+    font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;
+    text-transform:uppercase;margin-bottom:8px;
+  }
+  .plan-s .result-lbl{color:var(--s-c);}
+  .plan-m .result-lbl{color:var(--m-c);}
+  .plan-p .result-lbl{color:var(--p-c);}
+  .result p{font-size:14px;color:var(--text-muted);line-height:1.7;}
+  .result p strong{color:var(--text);font-weight:500;}
+
+  .not-inc{
+    margin-top:16px;font-size:13px;color:var(--text-dim);font-style:italic;
+    padding-left:14px;border-left:2px solid var(--border2);line-height:1.7;
+  }
+
+  /* ── COMPARISON TABLE ── */
+  .comp-table{width:100%;border-collapse:collapse;border:1px solid var(--border);margin-top:40px;}
+  .comp-table th{
+    padding:14px 18px;font-family:'DM Mono',monospace;font-size:10px;
+    font-weight:500;letter-spacing:.15em;text-transform:uppercase;text-align:left;
+    border-bottom:2px solid var(--border2);border-right:1px solid var(--border);
+    background:var(--surface);
+  }
+  .comp-table th:nth-child(2){color:var(--s-c);}
+  .comp-table th:nth-child(3){color:var(--m-c);}
+  .comp-table th:nth-child(4){color:var(--p-c);}
+  .comp-table td{
+    padding:13px 18px;font-size:13px;border-bottom:1px solid var(--border);
+    border-right:1px solid var(--border);vertical-align:top;line-height:1.6;
+    color:var(--text-muted);
+  }
+  .comp-table tr:last-child td{border-bottom:none;}
+  .comp-table td:first-child{
+    font-weight:500;color:var(--text);background:var(--surface);
+    font-size:13px;
+  }
+  .comp-table tr:hover td{background:var(--surface2);}
+  .comp-table tr:hover td:first-child{background:var(--surface2);}
+  .yes{color:var(--accent);font-weight:500;}
+  .no{color:var(--text-dim);}
+  .part{color:var(--gold);font-weight:500;}
+
+  /* ── PRICING SECTION ── */
+  .pricing-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:40px;
+  }
+  .pricing-card{
+    background:var(--surface);border:1px solid var(--border);padding:40px 32px;
+    text-align:center;position:relative;overflow:hidden;transition:border-color .3s;
+  }
+  .pricing-card:hover{border-color:var(--accent);}
+  .pricing-card.recommended{border-color:var(--m-c);border-width:2px;}
+  .pricing-card.recommended::after{
+    content:'RECOMENDADO';position:absolute;top:16px;right:-32px;
+    background:var(--m-c);color:#000;font-family:'DM Mono',monospace;
+    font-size:9px;letter-spacing:.15em;padding:4px 40px;transform:rotate(45deg);
+  }
+  .pricing-card-name{
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;
+    text-transform:uppercase;margin-bottom:16px;
+  }
+  .pricing-card:nth-child(1) .pricing-card-name{color:var(--s-c);}
+  .pricing-card:nth-child(2) .pricing-card-name{color:var(--m-c);}
+  .pricing-card:nth-child(3) .pricing-card-name{color:var(--p-c);}
+  .pricing-amount{
+    font-family:'Playfair Display',serif;font-size:clamp(28px,3vw,42px);
+    font-weight:900;margin-bottom:4px;
+  }
+  .pricing-card:nth-child(1) .pricing-amount{color:var(--s-c);}
+  .pricing-card:nth-child(2) .pricing-amount{color:var(--m-c);}
+  .pricing-card:nth-child(3) .pricing-amount{color:var(--p-c);}
+  .pricing-iva{font-size:12px;color:var(--text-dim);font-family:'DM Mono',monospace;margin-bottom:20px;}
+  .pricing-time{font-size:13px;color:var(--text-muted);margin-bottom:16px;}
+  .pricing-desc{font-size:13px;color:var(--text-dim);line-height:1.7;}
+
+  /* ── CONDITIONS ── */
+  .conditions{
+    margin-top:40px;background:var(--surface);border:1px solid var(--border);
+    padding:32px 36px;
+  }
+  .conditions h3{
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:20px;
+  }
+  .conditions p{font-size:13px;color:var(--text-muted);line-height:1.8;margin-bottom:12px;}
+  .conditions p:last-child{margin-bottom:0;}
+
+  /* ── CLOSING ── */
+  .closing{
+    padding:80px;border-top:1px solid var(--border);text-align:center;
+    position:relative;overflow:hidden;z-index:1;
+  }
+  .closing::before{
+    content:'';position:absolute;bottom:-300px;left:50%;transform:translateX(-50%);
+    width:600px;height:600px;
+    background:radial-gradient(circle,rgba(59,130,246,.05) 0%,transparent 70%);
+    pointer-events:none;
+  }
+  .closing-q{
+    font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,38px);
+    font-weight:700;font-style:italic;line-height:1.3;max-width:680px;
+    margin:0 auto 28px;
+  }
+  .closing-q em{font-style:normal;color:var(--accent);}
+  .closing-sub{font-size:14px;color:var(--text-muted);max-width:520px;margin:0 auto 48px;line-height:1.8;}
+  .sig-row{display:flex;justify-content:center;gap:64px;flex-wrap:wrap;}
+  .sig{text-align:center;}
+  .sig strong{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--text-dim);display:block;margin-bottom:4px;}
+  .sig span{font-size:13px;color:var(--text-muted);}
+
+  /* divider */
+  .divider{
+    display:flex;align-items:center;gap:20px;margin:36px 0;
+    color:var(--text-dim);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;
+  }
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  /* anims */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+  .cover .eyebrow{animation:fadeUp .6s ease both;}
+  .cover-sub-label{animation:fadeUp .6s .1s ease both;}
+  .cover-title{animation:fadeUp .7s .2s ease both;}
+  .cover-desc{animation:fadeUp .7s .3s ease both;}
+  .cover-meta{animation:fadeUp .7s .5s ease both;}
+
+  @media(max-width:900px){
+    .cover,.section,.closing{padding:44px 28px;}
+    .pillars{grid-template-columns:1fr;}
+    .pricing-grid{grid-template-columns:1fr;}
+    .plan-head{grid-template-columns:1fr;}
+    .plan-meta{text-align:left;}
+    .plan-body{padding:32px 28px 40px;}
+    .sig-row{gap:32px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ COVER ══════════════════ -->
+<section class="cover">
+  <div class="cover-grid"></div>
+  <div class="eyebrow">Propuesta de Servicios · Transformación Operativa</div>
+  <div class="cover-sub-label">Para: Andes Energy SAS · Zenelys Velásquez</div>
+  <h1 class="cover-title">
+    Tres<br>planes.<br>
+    <em>Un sistema.</em>
+  </h1>
+  <p class="cover-desc">
+    CRM de predios, sistema de gestión de tareas del equipo y automatización de flujos operativos.
+    Todo integrado en <strong>una sola plataforma a la medida de Andes Energy</strong>,
+    con aplicación web y móvil, código propio y control total de la información.
+  </p>
+
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <label>Preparado por</label>
+      <span>Marín Ortega Consultores Jurídicos S.A.S.</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Fecha</label>
+      <span>Marzo 2025</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Versión</label>
+      <span>v3.0</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Confidencial</label>
+      <span>Andes Energy SAS</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ CONTEXTO ══════════════════ -->
+<section class="section">
+  <div class="sec-label"><span class="num">00 /</span> Lo que entendemos</div>
+  <h2 class="sec-title">Sabemos cómo opera<br><em>Andes Energy hoy.</em></h2>
+  <p class="body-text">
+    Andes Energy evalúa decenas de predios por semana, en múltiples departamentos, con un equipo técnico que opera en campo. Hoy la información llega por WhatsApp, se registra en Excel, los certificados se revisan manualmente y los documentos contractuales (hoja de términos, contrato Bancolombia y autorización administrativa) se generan con retrasos que comprometen oportunidades.
+  </p>
+  <p class="body-text" style="margin-top:16px;">
+    El equipo necesita enfocarse en lo técnico — evaluación eléctrica, negociación con propietarios, relación con operadores de red — no en perseguir documentos, recordar tareas vencidas o preguntarle a Zenelys qué sigue.
+  </p>
+
+  <div class="hbox">
+    <strong>Nuestra propuesta:</strong> Un sistema centralizado donde cada predio se registra una sola vez (desde campo o desde oficina), se evalúa automáticamente, genera sus documentos sin intervención manual y permite a Zenelys ver el estado completo de la operación en tiempo real. Sin Excel. Sin WhatsApp como CRM. Sin fricción.
+  </div>
+
+  <div class="divider">LOS TRES PILARES EN TODOS LOS PLANES</div>
+
+  <div class="pillars" style="margin-bottom:0;">
+    <div class="pillar" style="border-color:var(--border2);">
+      <div class="pillar-lbl" style="color:var(--accent);">CRM de Predios</div>
+      <h4>Pipeline completo de originación</h4>
+      <p>Cada predio con su propietario, municipio, operador de red, estado de negociación, documentos y resultado del análisis jurídico. Vista de pipeline (kanban) para seguimiento visual del avance de cada oportunidad.</p>
+    </div>
+    <div class="pillar" style="border-color:var(--border2);">
+      <div class="pillar-lbl" style="color:var(--accent);">Gestión de Tareas</div>
+      <h4>Sistema de trabajo del equipo</h4>
+      <p>Cada miembro del equipo ve sus tareas del día, sus predios asignados y sus fechas límite. Zenelys ve la carga de trabajo de todos, las tareas vencidas y los predios sin movimiento. Sin preguntar a nadie.</p>
+    </div>
+    <div class="pillar" style="border-color:var(--border2);">
+      <div class="pillar-lbl" style="color:var(--accent);">Automatización</div>
+      <h4>Flujos que eliminan fricción</h4>
+      <p>Desde la creación automática de expedientes digitales hasta la generación de documentos contractuales, pasando por alertas, reportes y análisis jurídico automatizado. Lo que antes tomaba días, ocurre en minutos.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ PLAN 1 ══════════════════ -->
+<section class="section">
+  <div class="sec-label"><span class="num">01 /</span> Plan Esencial</div>
+
+  <div class="plan-card plan-s">
+    <div class="plan-head">
+      <div>
+        <div class="plan-num">Plan 01 · Esencial</div>
+        <div class="plan-name">La Base</div>
+        <div class="plan-tagline">CRM funcional + gestión de tareas + métricas de operación + 5 automatizaciones clave. En producción en 4 semanas.</div>
+      </div>
+      <div class="plan-meta">
+        <div class="pill">⏱ 3–4 semanas</div>
+        <div class="price-tag">$8.000.000</div>
+        <div class="price-note">+ IVA · Pago único</div>
+      </div>
+    </div>
+    <div class="plan-body">
+
+      <div class="pillars">
+        <div class="pillar">
+          <div class="pillar-lbl">CRM</div>
+          <h4>Pipeline de predios</h4>
+          <p>Base de datos centralizada de predios con los campos del flujo de originación: propietario, municipio, coordenadas, operador de red, estado del pipeline (Captado → Evaluado → Negociación → Firmado → Descartado) y enlace al expediente digital.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-lbl">Tareas</div>
+          <h4>Tablero de tareas vinculado a predios</h4>
+          <p>Cada tarea asociada a un predio específico, con responsable, fecha límite y estado. Vista kanban y vista lista. Zenelys ve todas las tareas del equipo; cada persona ve solo las suyas.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-lbl">Automatización</div>
+          <h4>5 flujos esenciales</h4>
+          <p>Creación automática de expediente digital al registrar predio. Notificación al responsable cuando llega un certificado. Alerta de tareas vencidas. Generación automática de los 3 documentos contractuales cuando el predio está listo para firma. Resumen diario de actividad del equipo para Zenelys.</p>
+        </div>
+      </div>
+
+      <div class="steps-lbl">Lo que recibe Andes Energy</div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-n">01</div>
+          <div>
+            <h4>Dashboard principal para Zenelys</h4>
+            <p>Vista de administradora: conteo de predios por estado, tareas pendientes del equipo hoy, últimos predios actualizados. Acceso desde cualquier dispositivo con las credenciales de Google Workspace de Andes Energy.</p>
+            <div class="tags"><span class="tag">Web + Móvil</span><span class="tag">Acceso con Google</span><span class="tag">Tiempo real</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">02</div>
+          <div>
+            <h4>Pipeline de predios (kanban + tabla)</h4>
+            <p>Todas las etapas del proceso de originación visibles en un tablero. Al hacer clic en un predio se abre su ficha completa: datos del propietario, resultado del análisis, enlace al expediente digital e historial de cambios. El equipo registra predios nuevos desde aquí, tanto en computador como en celular.</p>
+            <div class="tags"><span class="tag">Vista kanban</span><span class="tag">Ficha de predio</span><span class="tag">Registro desde campo</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">03</div>
+          <div>
+            <h4>Tablero personal del equipo</h4>
+            <p>Cada miembro del equipo ve solo sus tareas del día y sus predios asignados. Interfaz simple, sin ruido. Marca tareas como completadas y actualiza estados desde el celular sin necesidad de instalar ninguna aplicación.</p>
+            <div class="tags"><span class="tag">Acceso móvil</span><span class="tag">Vista individual</span><span class="tag">Sin instalación</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">04</div>
+          <div>
+            <h4>Formulario de registro de predio (campo + oficina)</h4>
+            <p>Formulario optimizado para celular: nombre del predio, municipio, coordenadas (GPS automático), datos del propietario, canal de entrada (WhatsApp, visita, referido) y fotos. Al guardar, el sistema crea automáticamente el expediente digital con su estructura de carpetas y asigna las primeras tareas.</p>
+            <div class="tags"><span class="tag">GPS automático</span><span class="tag">Fotos</span><span class="tag">Expediente automático</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">05</div>
+          <div>
+            <h4>Vista de tareas del equipo (para Zenelys)</h4>
+            <p>Zenelys ve las tareas de todo el equipo agrupadas por persona: quién tiene más carga, qué está vencido, qué predios llevan más de 5 días sin movimiento. Sin tener que preguntar a nadie.</p>
+            <div class="tags"><span class="tag">Filtros por persona</span><span class="tag">Alertas de vencimiento</span><span class="tag">Control total</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">06</div>
+          <div>
+            <h4>Métricas de operación</h4>
+            <p>Panel con indicadores clave de la originación: predios recibidos vs. descartados, tasa de conversión a firma, tiempo promedio entre captación y firma de términos, predios por departamento y operador de red. Zenelys toma decisiones con datos, no con intuición.</p>
+            <div class="tags"><span class="tag">Dashboard</span><span class="tag">Indicadores</span><span class="tag">Toma de decisiones</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">07</div>
+          <div>
+            <h4>Línea de tiempo por predio</h4>
+            <p>Cada predio tiene un historial cronológico visible: cuándo se registró, quién lo registró, cuándo llegó el certificado, cuándo se descartó o avanzó de etapa y por qué. Trazabilidad completa para que cualquier persona del equipo pueda retomar un predio sin preguntarle a nadie.</p>
+            <div class="tags"><span class="tag">Historial</span><span class="tag">Trazabilidad</span><span class="tag">Auditoría</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider">5 AUTOMATIZACIONES INCLUIDAS</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-n">A1</div>
+          <div>
+            <h4>Nuevo predio → expediente digital completo</h4>
+            <p>Al registrar un predio en el sistema, se crea automáticamente su expediente digital con la estructura de carpetas necesaria (insumos OR, cartografía, certificados, documentos contractuales, estudio de títulos). El enlace queda vinculado al registro del predio.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">A2</div>
+          <div>
+            <h4>Certificado recibido → notificación al responsable</h4>
+            <p>Cuando se sube un certificado de tradición y libertad al expediente del predio, el sistema notifica al responsable por correo: "El certificado de [Predio X] está listo para revisión." El estado del predio se actualiza automáticamente.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">A3</div>
+          <div>
+            <h4>Tarea vencida → alerta automática</h4>
+            <p>Todos los días a las 8am, el sistema revisa las tareas cuya fecha límite ya pasó y envía un correo al responsable y a Zenelys con el listado de pendientes vencidos. Las tareas se marcan visualmente como vencidas en la aplicación.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">A4</div>
+          <div>
+            <h4>Predio listo para firma → 3 documentos generados</h4>
+            <p>Cuando un predio pasa al estado "Listo para firma", el sistema toma los datos del registro, genera automáticamente la hoja de términos, el contrato de arrendamiento (versión Bancolombia) y la autorización administrativa, los sube al expediente digital y notifica al responsable con los enlaces directos.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">A5</div>
+          <div>
+            <h4>Resumen diario de actividad</h4>
+            <p>Todos los días a las 6pm, Zenelys recibe un correo con lo que pasó en el día: predios nuevos registrados, predios que cambiaron de estado, tareas completadas y tareas que nadie tocó. Un pulso diario de la operación sin tener que abrir el sistema.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="result">
+        <div class="result-lbl">Qué resuelve este plan</div>
+        <p>El equipo deja de usar WhatsApp y Excel como sistema de gestión. Zenelys ve el pipeline completo en tiempo real, con métricas de conversión e historial de cada predio. Los expedientes se crean solos. Los documentos contractuales se generan automáticamente cuando el predio está listo. <strong>Todo el código queda a nombre de Andes Energy, desplegado en sus cuentas, con control total.</strong></p>
+      </div>
+      <p class="not-inc">No incluye: Análisis jurídico automatizado (Gema AE conectada al flujo) · Checklists del Miro como tareas automáticas por etapa · CRM de operadores de red · Reporte semanal ejecutivo · Seguimiento de comunicaciones con entidades</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ PLAN 2 ══════════════════ -->
+<section class="section">
+  <div class="sec-label"><span class="num">02 /</span> Plan Avanzado</div>
+
+  <div class="plan-card plan-m">
+    <div class="plan-head">
+      <div>
+        <div class="plan-num">Plan 02 · Avanzado</div>
+        <div class="plan-name">El Salto</div>
+        <div class="plan-tagline">Análisis jurídico automatizado integrado al flujo. El Miro convertido en tareas reales. La Gema AE conectada al sistema.</div>
+      </div>
+      <div class="plan-meta">
+        <div class="pill">⏱ 6–8 semanas</div>
+        <div class="price-tag">$13.000.000</div>
+        <div class="price-note">+ IVA · Pago único</div>
+      </div>
+    </div>
+    <div class="plan-body">
+
+      <div class="pillars">
+        <div class="pillar">
+          <div class="pillar-lbl">CRM</div>
+          <h4>CRM completo: predios + propietarios + proyectos</h4>
+          <p>Base de datos relacional con tres módulos interconectados: predios, propietarios y proyectos. La ficha de un predio muestra todo en una sola pantalla: propietario, resultado del análisis jurídico con semáforo, estado del pipeline, tareas asociadas, documentos generados e historial completo.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-lbl">Tareas</div>
+          <h4>Checklists del Miro → tareas automáticas por etapa</h4>
+          <p>Cuando un predio cambia de etapa, el sistema crea automáticamente el conjunto de tareas correspondiente según el flujo del Miro: "Primer contacto con propietario", "Evaluación de terreno", "Solicitud cotización ET" — asignadas, con fecha límite y vinculadas al expediente.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-lbl">Automatización</div>
+          <h4>9 automatizaciones · Análisis jurídico integrado</h4>
+          <p>Las 5 automatizaciones del Plan Esencial más: análisis jurídico automático del certificado con semáforo en la app, tareas automáticas por etapa según el flujo del Miro, validación doble (SARLAFT + aprobación Zenelys) antes de generar documentos y detección de predios sin movimiento.</p>
+        </div>
+      </div>
+
+      <div class="steps-lbl">Lo que se agrega al Plan Esencial</div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-n">08</div>
+          <div>
+            <h4>Ficha completa de predio / proyecto</h4>
+            <p>Una sola pantalla que concentra toda la información de un predio: datos básicos, propietario con cédula y contacto, operador de red, resultado del análisis jurídico con semáforo y resumen del análisis, documentos generados con fecha, historial de cambios de estado y tareas asociadas con su progreso.</p>
+            <div class="tags"><span class="tag">Vista 360° del predio</span><span class="tag">Semáforo jurídico</span><span class="tag">Historial</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">09</div>
+          <div>
+            <h4>Formulario extendido de visita a campo</h4>
+            <p>El formulario de registro se amplía para capturar todo lo que exige el flujo de scouting del Miro en la primera visita: fotos georreferenciadas de la subestación, estado de líneas, contacto con cuidanderos, evaluación del terreno (tipo de suelo, nivel freático, zonas inundables, sombras, conteo aproximado de árboles), facturas de energía y posibles postes de conexión. Todo va directamente a la ficha del proyecto.</p>
+            <div class="tags"><span class="tag">Captura en campo</span><span class="tag">GPS + Cámara</span><span class="tag">Almacenamiento</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider">4 AUTOMATIZACIONES ADICIONALES AL PLAN ESENCIAL</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-n">A5</div>
+          <div>
+            <h4>Certificado recibido → análisis jurídico automático → semáforo</h4>
+            <p>La automatización más importante del sistema. Cuando se sube un certificado de tradición y libertad al expediente de un predio, el sistema lo analiza automáticamente contra el concepto jurídico de Estudio Legal Hernández y la normativa aplicable. Extrae: propietario real, área, gravámenes, hipotecas, alertas de baldío y genera un semáforo de viabilidad que aparece en tiempo real en la ficha del predio. El equipo ya no tiene que leer certificados manualmente.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">A6</div>
+          <div>
+            <h4>Cambio de etapa → tareas automáticas del Miro</h4>
+            <p>Cuando un predio cambia de etapa en el pipeline, el sistema genera automáticamente las tareas correspondientes según el flujo del Miro. Si pasa a "Gestión predial", se crean: primer contacto con administrador, solicitar factura de energía, solicitar certificado de libertad, evaluar condiciones del terreno. Si pasa a "Negociación", se crean: negociar términos comerciales, obtener copia de cédula, verificación SARLAFT. Si pasa a "Evaluación jurídica", se crea: revisión del resultado del análisis y solicitud de cotización de estudio de títulos. Cada tarea con responsable y plazo calculado.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">A7</div>
+          <div>
+            <h4>SARLAFT ok + aprobación Zenelys → documentos automáticos</h4>
+            <p>Mejora del flujo A4: ahora la generación de documentos requiere dos condiciones verificables — que la consulta SARLAFT esté registrada como aprobada en el sistema (tal como lo exige el flujo del Miro antes de avanzar con cualquier predio) y que Zenelys haya dado aprobación explícita desde la app (botón "Aprobar para firma"). Solo entonces se generan los 3 documentos con los datos completos del propietario y se suben al expediente.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">A8</div>
+          <div>
+            <h4>Detección de predios sin movimiento</h4>
+            <p>El sistema revisa cada 48 horas los predios en etapas activas (Evaluado / Negociación) que no han tenido ninguna actualización en más de 7 días. Envía alerta a Zenelys: "El Predio X lleva 9 días sin movimiento — responsable: [Nombre]." Predios atascados detectados sin depender de reportes manuales.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="result">
+        <div class="result-lbl">Qué resuelve este plan</div>
+        <p>El análisis jurídico que hoy Zenelys tiene en la Gema queda conectado al flujo completo: el certificado llega al expediente y el análisis aparece en la app sin que nadie haga nada. El Miro deja de ser un documento de referencia y se convierte en el sistema operativo del equipo: cada etapa genera las tareas correctas automáticamente. <strong>Este es el plan que entrega el mayor retorno sobre el esfuerzo invertido.</strong></p>
+      </div>
+      <p class="not-inc">No incluye: CRM de Operadores de Red · Reporte ejecutivo semanal automático · Consulta catastral automatizada (IGAC / catastros descentralizados) · Seguimiento de las 26 comunicaciones por proyecto con entidades · Portal para equipo ambiental externo · Checklist auditable de paso Originación → Desarrollo</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ PLAN 3 ══════════════════ -->
+<section class="section">
+  <div class="sec-label"><span class="num">03 /</span> Plan Pro</div>
+
+  <div class="plan-card plan-p">
+    <div class="plan-head">
+      <div>
+        <div class="plan-num">Plan 03 · Pro</div>
+        <div class="plan-name">IPP Ready</div>
+        <div class="plan-tagline">Infraestructura digital completa para operar como productor independiente de energía.</div>
+      </div>
+      <div class="plan-meta">
+        <div class="pill">⏱ 12–16 semanas</div>
+        <div class="price-tag">$21.000.000</div>
+        <div class="price-note">COP · Pago único</div>
+      </div>
+    </div>
+    <div class="plan-body">
+
+      <div class="pillars">
+        <div class="pillar">
+          <div class="pillar-lbl">CRM</div>
+          <h4>CRM completo + ORs + pipeline IPP</h4>
+          <p>Todo lo del Plan Avanzado más: CRM de Operadores de Red con checklists por OR, módulo de proyectos en construcción, seguimiento de financiamiento (Bancolombia), pipeline de inversores y métricas de portafolio para cuando Andes Energy opere como IPP.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-lbl">Tareas</div>
+          <h4>Gestión completa + portal equipo ambiental</h4>
+          <p>Sistema de gestión completo con vista de carga de trabajo por persona, tiempo en cada tarea y métricas de productividad. Portal separado para los 6 profesionales del equipo ambiental externo: ven solo sus proyectos, suben documentos y actualizan estados directamente en el sistema.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-lbl">Automatización</div>
+          <h4>16+ automatizaciones · IGAC · Reportes · Comunicaciones</h4>
+          <p>Agrega: consulta catastral asistida, reporte ejecutivo semanal automático para Zenelys, módulo de seguimiento de las 26 comunicaciones por proyecto activo con alertas de vencimiento, y borradores automáticos de derechos de petición.</p>
+        </div>
+      </div>
+
+      <div class="steps-lbl">Lo que se agrega sobre el Plan Avanzado</div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-n">+1</div>
+          <div>
+            <h4>Consulta catastral asistida: coordenada → cédula catastral → gestión de certificado</h4>
+            <p>Al registrar las coordenadas de un predio en la app, el sistema consulta las fuentes catastrales disponibles (IGAC para los municipios donde opera como gestor — que son la mayoría en las zonas rurales de Córdoba, Sucre, Bolívar, Atlántico, Magdalena, César y Boyacá — y los catastros descentralizados donde aplique). Extrae la cédula catastral y facilita la gestión de compra del certificado de tradición y libertad en la VUR. Para municipios con gestor catastral propio, el sistema identifica el gestor correspondiente y pre-llena la solicitud. El certificado se sube al expediente digital y dispara automáticamente el análisis jurídico.</p>
+            <div class="tags"><span class="tag">IGAC</span><span class="tag">Catastros descentralizados</span><span class="tag">VUR</span><span class="tag">Flujo del equipo técnico</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">+2</div>
+          <div>
+            <h4>CRM de Operadores de Red</h4>
+            <p>Registro completo de operadores de red con contacto del área de generación distribuida y planeación, checklist de requisitos de conexión según cada OR, estado de la relación y solicitudes de insumos activas por zona. Basado directamente en la Fase 1 del flujo de scouting del Miro. El equipo deja de buscar contactos en correos viejos y tiene todo centralizado.</p>
+            <div class="tags"><span class="tag">Directorio de ORs</span><span class="tag">Checklists por OR</span><span class="tag">Seguimiento de insumos</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">+3</div>
+          <div>
+            <h4>Reporte ejecutivo semanal automático</h4>
+            <p>Cada lunes a las 7am, Zenelys recibe un correo con el pulso de la semana: predios nuevos, predios descartados con razón, predios en negociación activa, tareas vencidas por persona y proyectos listos para pasar a Desarrollo. Datos reales, formato limpio, sin que nadie lo prepare.</p>
+            <div class="tags"><span class="tag">Reporte automático</span><span class="tag">Lunes 7am</span><span class="tag">Cero intervención</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">+4</div>
+          <div>
+            <h4>Módulo de 26 comunicaciones por proyecto activo</h4>
+            <p>Cada proyecto en construcción tiene su set de 26 comunicaciones con: entidad destinataria, fecha de envío, fecha esperada de respuesta, estado y escalamiento. El sistema revisa diariamente y envía alerta si alguna comunicación está por vencer o no recibió respuesta. Zenelys ve el semáforo de Paula sin tener que preguntarle.</p>
+            <div class="tags"><span class="tag">26 comunicaciones</span><span class="tag">Alertas de vencimiento</span><span class="tag">Semáforo</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">+5</div>
+          <div>
+            <h4>Borradores automáticos de derechos de petición</h4>
+            <p>Cuando una comunicación lleva más de X días sin respuesta y está marcada como "requiere derecho de petición", el sistema genera automáticamente un borrador en formato Word con el contexto del proyecto. El borrador llega a Zenelys o a Paula para revisión final antes de enviar. Sin empezar de cero cada vez.</p>
+            <div class="tags"><span class="tag">Derechos de petición</span><span class="tag">Borrador automático</span><span class="tag">Revisión antes de envío</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">+6</div>
+          <div>
+            <h4>Portal del equipo ambiental externo</h4>
+            <p>Los 6 profesionales del equipo ambiental acceden a una vista separada del sistema donde solo ven los proyectos que les corresponden. Pueden actualizar el estado de trámites ambientales, subir documentos y marcar tareas como completadas. Zenelys ve los cambios en tiempo real desde su dashboard sin intermediarios.</p>
+            <div class="tags"><span class="tag">Acceso controlado</span><span class="tag">6 usuarios externos</span><span class="tag">Tiempo real</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">+7</div>
+          <div>
+            <h4>Checklist de paso Originación → Desarrollo (auditable)</h4>
+            <p>Los 4 criterios exactos del flujo del Miro se convierten en campos verificables en el sistema: (1) prefactibilidad de conexión ok, (2) términos comerciales firmados, (3) área útil suficiente, (4) estudio de títulos ok. Cuando los 4 están en verde, Zenelys recibe una notificación: "Proyecto X listo para Desarrollo." Un clic de aprobación cambia el pipeline, registra la fecha, el responsable y genera el acta de cierre de originación automáticamente. Trazabilidad completa para Bancolombia y cualquier proceso de due diligence.</p>
+            <div class="tags"><span class="tag">4 criterios</span><span class="tag">Acta automática</span><span class="tag">Auditoría completa</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="result">
+        <div class="result-lbl">Qué resuelve este plan</div>
+        <p>Andes Energy tiene la infraestructura digital de una empresa que opera como IPP. Desde las coordenadas del predio hasta el acta de cierre de originación, todo está trazado, automatizado y en una sola plataforma. La consulta catastral cubre la mayoría de los municipios donde opera el equipo, las comunicaciones con entidades tienen seguimiento automático y el equipo ambiental externo trabaja dentro del mismo sistema. <strong>Recomendación: no empezar por aquí. El Plan Avanzado entrega el 80% del valor. El Pro es la evolución natural 3–4 meses después, cuando el equipo ya domina el sistema.</strong></p>
+      </div>
+
+      <div class="hbox" style="margin-top:24px;">
+        <strong>¿Quiero el Avanzado hoy y el Pro después?</strong> Perfecto. El código, la base de datos y la infraestructura del Plan Avanzado son la base del Pro. Cuando Andes Energy decida escalar, se construyen las funcionalidades adicionales sobre lo que ya está funcionando. La inversión del upgrade se cotiza en ese momento y corresponde únicamente a las funcionalidades nuevas, no al sistema completo.
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ COMPARISON ══════════════════ -->
+<section class="section">
+  <div class="sec-label"><span class="num">04 /</span> Comparativa</div>
+  <h2 class="sec-title">Los tres planes<br><em>de un vistazo.</em></h2>
+
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th>Funcionalidad</th>
+        <th>Esencial</th>
+        <th>Avanzado</th>
+        <th>Pro</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Pipeline kanban de predios</td><td class="yes">Sí</td><td class="yes">Sí (+ ficha completa)</td><td class="yes">Sí (+ IPP pipeline)</td></tr>
+      <tr><td>Gestión de tareas del equipo</td><td class="yes">Sí (básico)</td><td class="yes">Sí + checklists Miro automáticas</td><td class="yes">Sí + métricas de carga</td></tr>
+      <tr><td>Dashboard ejecutivo Zenelys</td><td class="yes">Sí (con métricas)</td><td class="yes">Sí (completo)</td><td class="yes">Sí (avanzado)</td></tr>
+      <tr><td>App móvil (sin instalación)</td><td class="yes">Sí</td><td class="yes">Sí (extendida)</td><td class="yes">Sí (completa)</td></tr>
+      <tr><td>Expediente digital automático</td><td class="yes">Sí</td><td class="yes">Sí</td><td class="yes">Sí</td></tr>
+      <tr><td>Métricas de conversión y operación</td><td class="yes">Sí</td><td class="yes">Sí (ampliadas)</td><td class="yes">Sí (avanzadas)</td></tr>
+      <tr><td>Línea de tiempo / trazabilidad por predio</td><td class="yes">Sí</td><td class="yes">Sí</td><td class="yes">Sí</td></tr>
+      <tr><td>Análisis jurídico automatizado (semáforo)</td><td class="no">No (manual)</td><td class="yes">Sí — automático</td><td class="yes">Sí — automático</td></tr>
+      <tr><td>Checklists Miro → tareas automáticas</td><td class="no">No</td><td class="yes">Sí</td><td class="yes">Sí</td></tr>
+      <tr><td>CRM de Operadores de Red</td><td class="no">No</td><td class="no">No</td><td class="yes">Sí</td></tr>
+      <tr><td>3 documentos contractuales automáticos</td><td class="part">Sí (básico)</td><td class="yes">Sí (SARLAFT + aprobación)</td><td class="yes">Sí</td></tr>
+      <tr><td>Reporte semanal automático</td><td class="no">No</td><td class="no">No</td><td class="yes">Sí</td></tr>
+      <tr><td>Alerta de predios sin movimiento</td><td class="no">No</td><td class="yes">Sí</td><td class="yes">Sí</td></tr>
+      <tr><td>Consulta catastral asistida (IGAC + descentralizados)</td><td class="no">No</td><td class="no">No</td><td class="yes">Sí</td></tr>
+      <tr><td>26 comunicaciones por proyecto</td><td class="no">No</td><td class="no">No</td><td class="yes">Sí</td></tr>
+      <tr><td>Borradores de derechos de petición</td><td class="no">No</td><td class="no">No</td><td class="yes">Sí</td></tr>
+      <tr><td>Portal equipo ambiental externo</td><td class="no">No</td><td class="no">No</td><td class="yes">Sí</td></tr>
+      <tr><td>Checklist Originación → Desarrollo</td><td class="no">No</td><td class="no">No</td><td class="yes">Sí</td></tr>
+      <tr><td>Automatizaciones</td><td><span style="color:var(--s-c)">5</span></td><td><span style="color:var(--m-c)">9</span></td><td><span style="color:var(--p-c)">16+</span></td></tr>
+      <tr><td>Pantallas de la aplicación</td><td><span style="color:var(--s-c)">7</span></td><td><span style="color:var(--m-c)">9</span></td><td><span style="color:var(--p-c)">17+</span></td></tr>
+      <tr><td>Tiempo de implementación</td><td><span style="color:var(--s-c)">3–4 semanas</span></td><td><span style="color:var(--m-c)">6–8 semanas</span></td><td><span style="color:var(--p-c)">12–16 semanas</span></td></tr>
+      <tr>
+        <td style="font-weight:700;color:var(--accent);">Inversión</td>
+        <td style="font-weight:700;color:var(--s-c);font-size:15px;">$8.000.000 + IVA</td>
+        <td style="font-weight:700;color:var(--m-c);font-size:15px;">$13.000.000 + IVA</td>
+        <td style="font-weight:700;color:var(--p-c);font-size:15px;">$21.000.000</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+
+<!-- ══════════════════ PRICING ══════════════════ -->
+<section class="section">
+  <div class="sec-label"><span class="num">05 /</span> Inversión</div>
+  <h2 class="sec-title">Tres niveles.<br><em>Un solo estándar.</em></h2>
+  <p class="body-text">
+    Todos los planes incluyen: código propio a nombre de Andes Energy, despliegue en las cuentas de la empresa, dos sesiones de capacitación al equipo, manual de uso, soporte durante 30 días después de la entrega y una sesión de revisión al mes 2 post-entrega para ajustes finos.
+  </p>
+
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="pricing-card-name">Esencial</div>
+      <div class="pricing-amount">$8.000.000</div>
+      <div class="pricing-iva">+ IVA</div>
+      <div class="pricing-time">3–4 semanas</div>
+      <div class="pricing-desc">CRM + tareas + métricas + 5 automatizaciones. La base sólida para empezar a operar con orden.</div>
+    </div>
+    <div class="pricing-card recommended">
+      <div class="pricing-card-name">Avanzado</div>
+      <div class="pricing-amount">$13.000.000</div>
+      <div class="pricing-iva">+ IVA</div>
+      <div class="pricing-time">6–8 semanas</div>
+      <div class="pricing-desc">Análisis jurídico automático + Miro como sistema operativo + 9 automatizaciones. El mayor retorno.</div>
+    </div>
+    <div class="pricing-card">
+      <div class="pricing-card-name">Pro</div>
+      <div class="pricing-amount">$21.000.000</div>
+      <div class="pricing-iva">COP</div>
+      <div class="pricing-time">12–16 semanas</div>
+      <div class="pricing-desc">Infraestructura IPP completa. Catastro + CRM de ORs + reportes + 26 comunicaciones + portal ambiental + 16 automatizaciones.</div>
+    </div>
+  </div>
+
+  <div class="conditions">
+    <h3>Condiciones generales</h3>
+    <p><strong style="color:var(--text);">Propiedad del sistema:</strong> Todo el código, las bases de datos y la infraestructura quedan a nombre de Andes Energy. Las credenciales, cuentas de servicio y repositorios se crean con los correos corporativos de la empresa. Marín Ortega no retiene acceso una vez realizada la entrega.</p>
+    <p><strong style="color:var(--text);">Modalidad de pago:</strong> 50% al inicio del proyecto, 50% contra entrega. La facturación se realiza a nombre de Marín Ortega Consultores Jurídicos S.A.S.</p>
+    <p><strong style="color:var(--text);">Costos de terceros:</strong> Los costos de las plataformas de infraestructura (hosting, base de datos, servicios de IA, almacenamiento) corren por cuenta de Andes Energy. Estimamos un costo mensual de operación entre $150.000 y $350.000 COP dependiendo del plan, y lo detallamos en la propuesta técnica una vez seleccionado el plan.</p>
+    <p><strong style="color:var(--text);">Capacitación:</strong> Dos sesiones de capacitación incluidas (una para Zenelys como administradora, una para el equipo operativo). Manual de uso entregado en formato digital.</p>
+    <p><strong style="color:var(--text);">Soporte post-entrega:</strong> 30 días de soporte incluidos para ajustes menores y resolución de incidencias, más una sesión de revisión al mes 2 post-entrega para verificar adopción del equipo y hacer ajustes finos. Después de este período, Andes Energy opera de forma autónoma o puede contratar horas de soporte adicionales.</p>
+    <p><strong style="color:var(--text);">Escalabilidad y evolución entre planes:</strong> Los tres planes comparten la misma base tecnológica. El Plan Esencial es el cimiento del Avanzado, y el Avanzado es el cimiento del Pro. Esto significa que si Andes Energy inicia con el Plan Avanzado y más adelante quiere evolucionar al Pro, no se empieza de cero: se construye sobre lo que ya existe. La inversión para pasar del Avanzado al Pro sería únicamente por las funcionalidades adicionales del Pro, no por el sistema completo. Es un camino, no tres productos distintos.</p>
+  </div>
+</section>
+
+
+<!-- ══════════════════ CLOSING ══════════════════ -->
+<section class="closing">
+  <div class="closing-q">
+    "Empezar por el Plan Avanzado.<br>
+    Evolucionar al Pro cuando<br>
+    el equipo ya <em>viva en el sistema.</em>"
+  </div>
+  <p class="closing-sub">
+    El Plan Esencial es una base sólida si los tiempos son ajustados o si el equipo necesita empezar a operar con orden cuanto antes.
+    El Plan Avanzado es el punto dulce: conecta el análisis jurídico al flujo, convierte el Miro en el sistema operativo real del equipo y entrega el mayor retorno sobre la inversión.
+    El Pro es la evolución natural, no el punto de partida. Y lo mejor: cuando Andes Energy quiera dar ese salto, se construye sobre lo que ya está funcionando. No se repite trabajo, no se paga doble. Se escala.
+  </p>
+  <div class="sig-row">
+    <div class="sig">
+      <strong>Germán Andrés Ortega</strong>
+      <span>Socio Director · Automatización · Derecho Corporativo</span>
+    </div>
+    <div class="sig">
+      <strong>Nicolás Marín Muñoz</strong>
+      <span>Socio · Derecho Contractual · Procesos</span>
+    </div>
+  </div>
+  <div style="margin-top:32px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted);letter-spacing:.08em;">
+    marinortega.com
+  </div>
+  <div style="margin-top:48px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text-dim);letter-spacing:.1em;">
+    Documento confidencial · Andes Energy SAS · Marzo 2025
+  </div>
+</section>
+
+</body>
+</html>
